@@ -3,126 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevLinkPro - Landing Page Profissional para Produtos Digitais</title>
+    <title>DevLinkPro | Página de Links Profissional</title>
+    <meta name="description" content="Página de links profissional com design premium">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔗</text></svg>">
 </head>
 <body>
-    <!-- Barra de Navegação -->
-    <nav class="navbar">
+    <!-- Header com navegação -->
+    <header class="header">
         <div class="container">
-            <div class="nav-content">
-                <a href="#" class="logo">
-                    <span class="logo-icon">🚀</span>
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-icon">🔗</span>
                     <span class="logo-text">DevLink<span class="logo-highlight">Pro</span></span>
-                </a>
-                
-                <div class="nav-menu" id="navMenu">
-                    <a href="#features" class="nav-link">Recursos</a>
-                    <a href="#benefits" class="nav-link">Vantagens</a>
-                    <a href="#testimonials" class="nav-link">Depoimentos</a>
-                    <a href="#pricing" class="nav-link">Preços</a>
-                    <a href="#faq" class="nav-link">FAQ</a>
                 </div>
-                
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link active">Início</a>
+                    <a href="#about" class="nav-link">Sobre</a>
+                    <a href="#links" class="nav-link">Links</a>
+                    <a href="#projects" class="nav-link">Projetos</a>
+                    <a href="#contact" class="nav-link">Contato</a>
+                </div>
                 <div class="nav-actions">
-                    <button class="btn btn-login">Área do Cliente</button>
-                    <button class="btn btn-primary btn-nav-cta" id="buyNowBtn">
-                        Comprar Agora
+                    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu mobile">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge">Página de Links Premium</div>
+                    <h1 class="hero-title">Transforme seus links em uma <span class="gradient-text">experiência única</span></h1>
+                    <p class="hero-description">
+                        Um template profissional para desenvolvedores, criativos e profissionais que desejam compartilhar seus links com estilo e funcionalidade.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#links" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Acessar Links
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Entrar em Contato
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Online</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Responsivo</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">🚀</span>
+                            <span class="stat-label">Performance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Foto de perfil">
+                            </div>
+                            <div class="profile-badge">
+                                <i class="fas fa-check-circle"></i> Verificado
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h2 class="profile-name">Alex Silva</h2>
+                            <p class="profile-title">Desenvolvedor Full Stack</p>
+                            <div class="profile-location">
+                                <i class="fas fa-map-marker-alt"></i> São Paulo, Brasil
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-value">150+</span>
+                                <span class="stat-label">Projetos</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value">5+</span>
+                                <span class="stat-label">Anos Exp.</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value">98%</span>
+                                <span class="stat-label">Satisfação</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section class="links-section" id="links">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meus <span class="gradient-text">Links</span></h2>
+                <p class="section-subtitle">Acesse minhas redes sociais, portfólio e recursos importantes</p>
+            </div>
+            
+            <div class="links-grid">
+                <!-- Link 1 -->
+                <a href="https://github.com" target="_blank" class="link-card" data-category="social">
+                    <div class="link-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">GitHub</h3>
+                        <p class="link-description">Veja meus projetos e contribuições no GitHub</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Social</div>
+                </a>
                 
-                <button class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
+                <!-- Link 2 -->
+                <a href="https://linkedin.com" target="_blank" class="link-card" data-category="professional">
+                    <div class="link-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">LinkedIn</h3>
+                        <p class="link-description">Conecte-se comigo profissionalmente</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Profissional</div>
+                </a>
+                
+                <!-- Link 3 -->
+                <a href="https://dribbble.com" target="_blank" class="link-card" data-category="portfolio">
+                    <div class="link-icon">
+                        <i class="fab fa-dribbble"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">Portfólio</h3>
+                        <p class="link-description">Explore meus trabalhos de design e UI/UX</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Portfólio</div>
+                </a>
+                
+                <!-- Link 4 -->
+                <a href="https://medium.com" target="_blank" class="link-card" data-category="content">
+                    <div class="link-icon">
+                        <i class="fab fa-medium"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">Blog & Artigos</h3>
+                        <p class="link-description">Leia meus artigos sobre desenvolvimento</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Conteúdo</div>
+                </a>
+                
+                <!-- Link 5 -->
+                <a href="https://youtube.com" target="_blank" class="link-card" data-category="content">
+                    <div class="link-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">YouTube</h3>
+                        <p class="link-description">Tutoriais e conteúdo sobre programação</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Vídeo</div>
+                </a>
+                
+                <!-- Link 6 -->
+                <a href="https://twitter.com" target="_blank" class="link-card" data-category="social">
+                    <div class="link-icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">Twitter</h3>
+                        <p class="link-description">Acompanhe meus pensamentos e atualizações</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Social</div>
+                </a>
+                
+                <!-- Link 7 -->
+                <a href="https://instagram.com" target="_blank" class="link-card" data-category="social">
+                    <div class="link-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">Instagram</h3>
+                        <p class="link-description">Veja meu dia a dia e projetos em andamento</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Social</div>
+                </a>
+                
+                <!-- Link 8 -->
+                <a href="mailto:contato@exemplo.com" class="link-card" data-category="contact">
+                    <div class="link-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3 class="link-title">E-mail</h3>
+                        <p class="link-description">Entre em contato para parcerias e projetos</p>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="link-badge">Contato</div>
+                </a>
+            </div>
+            
+            <div class="links-actions">
+                <button class="btn btn-filter active" data-filter="all">
+                    <i class="fas fa-th"></i> Todos os Links
+                </button>
+                <button class="btn btn-filter" data-filter="social">
+                    <i class="fas fa-users"></i> Social
+                </button>
+                <button class="btn btn-filter" data-filter="professional">
+                    <i class="fas fa-briefcase"></i> Profissional
+                </button>
+                <button class="btn btn-filter" data-filter="portfolio">
+                    <i class="fas fa-briefcase"></i> Portfólio
+                </button>
+                <button class="btn btn-filter" data-filter="content">
+                    <i class="fas fa-file-alt"></i> Conteúdo
                 </button>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Seção Hero -->
-    <section class="hero">
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <span class="badge">
-                        <i class="fas fa-bolt"></i> OFERTA POR TEMPO LIMITADO
-                    </span>
-                    
-                    <h1 class="hero-title">
-                        Transforme Sua Presença Online com o 
-                        <span class="text-gradient">DevLinkPro</span>
-                    </h1>
-                    
-                    <p class="hero-subtitle">
-                        A solução definitiva para desenvolvedores e criadores de conteúdo 
-                        que desejam uma landing page profissional, otimizada para conversão 
-                        e totalmente personalizável.
-                    </p>
-                    
-                    <div class="hero-cta">
-                        <button class="btn btn-primary btn-lg btn-hero-cta" id="heroCtaBtn">
-                            <i class="fas fa-shopping-cart"></i> Obter DevLinkPro Agora
-                        </button>
-                        <button class="btn btn-secondary btn-lg" id="demoBtn">
-                            <i class="fas fa-play-circle"></i> Ver Demonstração
-                        </button>
+            <div class="section-header">
+                <h2 class="section-title">Projetos <span class="gradient-text">Destacados</span></h2>
+                <p class="section-subtitle">Alguns dos meus trabalhos mais recentes e relevantes</p>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-badge">Web App</div>
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Projeto 1">
                     </div>
-                    
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">2,500+</div>
-                            <div class="stat-label">Desenvolvedores Satisfeitos</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Sistema de Gestão Financeira</h3>
+                        <p class="project-description">
+                            Plataforma completa para controle financeiro pessoal e empresarial com relatórios detalhados.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">98.7%</div>
-                            <div class="stat-label">Taxa de Satisfação</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Suporte Premium</div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-small">
+                                <i class="fas fa-external-link-alt"></i> Ver Projeto
+                            </a>
+                            <a href="#" class="btn btn-small btn-outline">
+                                <i class="fab fa-github"></i> Código
+                            </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="hero-visual">
-                    <div class="product-showcase">
-                        <div class="showcase-container">
-                            <div class="showcase-screen">
-                                <div class="screen-header">
-                                    <div class="screen-dots">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <div class="screen-url">devlinkpro.digital/seudomínio</div>
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-badge">Mobile</div>
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Projeto 2">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">App de Fitness e Saúde</h3>
+                        <p class="project-description">
+                            Aplicativo móvel para acompanhamento de exercícios, dieta e metas de saúde.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">GraphQL</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-small">
+                                <i class="fas fa-external-link-alt"></i> Ver Projeto
+                            </a>
+                            <a href="#" class="btn btn-small btn-outline">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-badge">UI/UX</div>
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1715&q=80" alt="Projeto 3">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Design System Corporativo</h3>
+                        <p class="project-description">
+                            Sistema de design completo com componentes reutilizáveis para produtos digitais.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Figma</span>
+                            <span class="tech-tag">Storybook</span>
+                            <span class="tech-tag">Vue.js</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-small">
+                                <i class="fas fa-external-link-alt"></i> Ver Projeto
+                            </a>
+                            <a href="#" class="btn btn-small btn-outline">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-footer">
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-folder-open"></i> Ver Todos os Projetos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="section-header">
+                        <h2 class="section-title">Sobre <span class="gradient-text">Mim</span></h2>
+                        <p class="section-subtitle">Desenvolvedor Full Stack com paixão por criar soluções inovadoras</p>
+                    </div>
+                    
+                    <div class="about-text">
+                        <p>
+                            Com mais de 5 anos de experiência no desenvolvimento web, tenho trabalhado em projetos desafiadores 
+                            que vão desde startups até grandes corporações. Minha expertise inclui desenvolvimento front-end e back-end, 
+                            arquitetura de sistemas e DevOps.
+                        </p>
+                        <p>
+                            Acredito que a tecnologia deve ser acessível e útil para todos, e por isso me dedico a criar 
+                            soluções que não apenas funcionem bem, mas que também proporcionem uma excelente experiência ao usuário.
+                        </p>
+                    </div>
+                    
+                    <div class="skills">
+                        <h3 class="skills-title">Habilidades Principais</h3>
+                        <div class="skills-grid">
+                            <div class="skill">
+                                <div class="skill-header">
+                                    <span class="skill-name">JavaScript/TypeScript</span>
+                                    <span class="skill-percentage">95%</span>
                                 </div>
-                                <div class="screen-content">
-                                    <div class="demo-content">
-                                        <h3>Seu Produto Digital</h3>
-                                        <p>Landing page otimizada para conversões</p>
-                                        <div class="demo-features">
-                                            <div class="demo-feature">
-                                                <i class="fas fa-check"></i> Design Responsivo
-                                            </div>
-                                            <div class="demo-feature">
-                                                <i class="fas fa-check"></i> SEO Otimizado
-                                            </div>
-                                            <div class="demo-feature">
-                                                <i class="fas fa-check"></i> Alta Conversão
-                                            </div>
-                                        </div>
-                                        <button class="demo-cta">Compre Agora - R$97</button>
-                                    </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%"></div>
                                 </div>
                             </div>
                             
-                            <div class="showcase-badge">
-                                <i class="fas fa-crown"></i> Template Premium
+                            <div class="skill">
+                                <div class="skill-header">
+                                    <span class="skill-name">React & Vue.js</span>
+                                    <span class="skill-percentage">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
                             </div>
+                            
+                            <div class="skill">
+                                <div class="skill-header">
+                                    <span class="skill-name">Node.js</span>
+                                    <span class="skill-percentage">88%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill">
+                                <div class="skill-header">
+                                    <span class="skill-name">UI/UX Design</span>
+                                    <span class="skill-percentage">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="experience-card">
+                        <h3 class="experience-title">Experiência Profissional</h3>
+                        
+                        <div class="experience-item">
+                            <div class="experience-header">
+                                <h4 class="experience-role">Desenvolvedor Sênior</h4>
+                                <span class="experience-period">2021 - Presente</span>
+                            </div>
+                            <div class="experience-company">TechSolutions Inc.</div>
+                            <p class="experience-description">
+                                Liderança de equipes de desenvolvimento, arquitetura de sistemas e implementação de soluções escaláveis.
+                            </p>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="experience-header">
+                                <h4 class="experience-role">Desenvolvedor Full Stack</h4>
+                                <span class="experience-period">2019 - 2021</span>
+                            </div>
+                            <div class="experience-company">Inovação Digital Ltda.</div>
+                            <p class="experience-description">
+                                Desenvolvimento de aplicações web e mobile, integração de APIs e otimização de performance.
+                            </p>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="experience-header">
+                                <h4 class="experience-role">Desenvolvedor Front-end</h4>
+                                <span class="experience-period">2017 - 2019</span>
+                            </div>
+                            <div class="experience-company">WebCreators Agency</div>
+                            <p class="experience-description">
+                                Criação de interfaces responsivas, implementação de designs e desenvolvimento de componentes reutilizáveis.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -130,904 +469,173 @@
         </div>
     </section>
 
-    <!-- Seção de Recursos -->
-    <section class="features" id="features">
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
         <div class="container">
             <div class="section-header">
-                <span class="section-subtitle">Recursos Exclusivos</span>
-                <h2 class="section-title">Tudo que você precisa para vender mais</h2>
-                <p class="section-description">
-                    O DevLinkPro foi desenvolvido com as melhores práticas de UX/UI 
-                    para maximizar suas conversões.
-                </p>
+                <h2 class="section-title">Entre em <span class="gradient-text">Contato</span></h2>
+                <p class="section-subtitle">Vamos conversar sobre seu próximo projeto ou oportunidade de colaboração</p>
             </div>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="contact-title">E-mail</h3>
+                        <p class="contact-detail">contato@exemplo.com</p>
+                        <a href="mailto:contato@exemplo.com" class="contact-link">Enviar mensagem</a>
                     </div>
-                    <h3 class="feature-title">100% Responsivo</h3>
-                    <p class="feature-description">
-                        Seu produto será perfeitamente exibido em qualquer dispositivo, 
-                        desde smartphones até desktops.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Design mobile-first</li>
-                        <li><i class="fas fa-check"></i> Testado em 50+ dispositivos</li>
-                        <li><i class="fas fa-check"></i> Carregamento otimizado</li>
-                    </ul>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3 class="contact-title">Telefone</h3>
+                        <p class="contact-detail">+55 (11) 99999-9999</p>
+                        <a href="tel:+5511999999999" class="contact-link">Ligar agora</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="contact-title">Localização</h3>
+                        <p class="contact-detail">São Paulo, Brasil</p>
+                        <a href="#" class="contact-link">Ver no mapa</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="contact-title">Horário Comercial</h3>
+                        <p class="contact-detail">Seg - Sex: 9h às 18h</p>
+                        <p class="contact-detail">Sábado: 10h às 14h</p>
+                    </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="feature-title">Alta Performance</h3>
-                    <p class="feature-description">
-                        Carregamento ultrarrápido com pontuação máxima no PageSpeed Insights.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Score 95+ no PageSpeed</li>
-                        <li><i class="fas fa-check"></i> Otimização de imagens</li>
-                        <li><i class="fas fa-check"></i> Código minificado</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 class="feature-title">SEO Otimizado</h3>
-                    <p class="feature-description">
-                        Estrutura preparada para ranquear no Google e atrair tráfego orgânico.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Meta tags otimizadas</li>
-                        <li><i class="fas fa-check"></i> Schema markup</li>
-                        <li><i class="fas fa-check"></i> URL amigável</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <h3 class="feature-title">Customização Fácil</h3>
-                    <p class="feature-description">
-                        Modifique cores, textos e imagens sem tocar em uma linha de código.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Editor visual integrado</li>
-                        <li><i class="fas fa-check"></i> 10+ templates prontos</li>
-                        <li><i class="fas fa-check"></i> Guias passo a passo</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Segurança Máxima</h3>
-                    <p class="feature-description">
-                        Proteção avançada contra ataques e vulnerabilidades.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> HTTPS automático</li>
-                        <li><i class="fas fa-check"></i> Proteção DDoS</li>
-                        <li><i class="fas fa-check"></i> Backup diário</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="feature-title">Análises Integradas</h3>
-                    <p class="feature-description">
-                        Painel com métricas detalhadas sobre visitantes e conversões.
-                    </p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Google Analytics integrado</li>
-                        <li><i class="fas fa-check"></i> Relatórios de conversão</li>
-                        <li><i class="fas fa-check"></i> Heatmaps</li>
-                    </ul>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome completo</label>
+                            <input type="text" id="name" name="name" required placeholder="Digite seu nome">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Assunto</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Qual é o assunto?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Descreva sua mensagem aqui..."></textarea>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Demonstração -->
-    <section class="demo-section">
-        <div class="container">
-            <div class="demo-content">
-                <div class="demo-text">
-                    <h2 class="demo-title">Veja o DevLinkPro em ação</h2>
-                    <p class="demo-description">
-                        Assista a uma demonstração rápida de como você pode personalizar 
-                        e publicar sua landing page em menos de 10 minutos.
-                    </p>
-                    
-                    <div class="demo-features-list">
-                        <div class="demo-feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Configure em minutos</span>
-                        </div>
-                        <div class="demo-feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Personalize sem codificar</span>
-                        </div>
-                        <div class="demo-feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Publique com um clique</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary btn-lg" id="watchDemoBtn">
-                        <i class="fas fa-play"></i> Assistir Demonstração Completa
-                    </button>
-                </div>
-                
-                <div class="demo-video">
-                    <div class="video-placeholder">
-                        <div class="video-thumbnail">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-overlay">
-                                <span>Clique para reproduzir</span>
-                            </div>
-                        </div>
-                        <div class="video-info">
-                            <h4>Tour Completo do DevLinkPro</h4>
-                            <p>8 minutos • Demonstração completa</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de Benefícios -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Por que escolher o DevLinkPro</span>
-                <h2 class="section-title">Venda mais com uma landing page profissional</h2>
-                <p class="section-description">
-                    Comparado a soluções genéricas, o DevLinkPro é otimizado especificamente 
-                    para produtos digitais e infoprodutos.
-                </p>
-            </div>
-            
-            <div class="benefits-comparison">
-                <div class="comparison-table">
-                    <div class="comparison-header">
-                        <div class="comparison-title">Recurso</div>
-                        <div class="comparison-column">DevLinkPro</div>
-                        <div class="comparison-column">Templates Genéricos</div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Otimização para Conversão</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Checkout Integrado</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Sequência de E-mails</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Suporte Especializado</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Atualizações Gratuitas</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                    
-                    <div class="comparison-row">
-                        <div class="comparison-title">Garantia de 30 Dias</div>
-                        <div class="comparison-column"><i class="fas fa-check success"></i></div>
-                        <div class="comparison-column"><i class="fas fa-times error"></i></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="benefits-stats">
-                <div class="benefit-stat">
-                    <div class="stat-value">+300%</div>
-                    <div class="stat-label">Aumento médio na conversão</div>
-                </div>
-                <div class="benefit-stat">
-                    <div class="stat-value">-40%</div>
-                    <div class="stat-label">Redução na taxa de rejeição</div>
-                </div>
-                <div class="benefit-stat">
-                    <div class="stat-value">+2.5x</div>
-                    <div class="stat-label">Mais tempo na página</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de Preços -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Planos e Preços</span>
-                <h2 class="section-title">Escolha o plano ideal para seu negócio</h2>
-                <p class="section-description">
-                    Todos os planos incluem os recursos essenciais. Escolha o que melhor se adapta às suas necessidades.
-                </p>
-            </div>
-            
-            <div class="pricing-switcher">
-                <span class="switcher-label">Pagamento Mensal</span>
-                <div class="switcher">
-                    <input type="checkbox" id="pricingToggle" class="toggle-checkbox">
-                    <label for="pricingToggle" class="toggle-label">
-                        <span class="toggle-handle"></span>
-                    </label>
-                </div>
-                <span class="switcher-label active">Pagamento Anual <span class="discount-badge">Economize 20%</span></span>
-            </div>
-            
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 class="pricing-title">Básico</h3>
-                        <div class="pricing-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">97</span>
-                            <span class="amount annually">77</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="pricing-description">Para quem está começando no mercado digital</p>
-                    </div>
-                    
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>1 Produto Digital</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>5.000 visitas/mês</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Template Básico</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Suporte por E-mail</span>
-                        </div>
-                        <div class="feature-item disabled">
-                            <i class="fas fa-times"></i>
-                            <span>Checkout Integrado</span>
-                        </div>
-                        <div class="feature-item disabled">
-                            <i class="fas fa-times"></i>
-                            <span>Sequência de E-mails</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-outline btn-pricing">
-                        Escolher Plano Básico
-                    </button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Mais Popular</div>
-                    <div class="pricing-header">
-                        <h3 class="pricing-title">Profissional</h3>
-                        <div class="pricing-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">197</span>
-                            <span class="amount annually">157</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="pricing-description">Para profissionais que querem escalar suas vendas</p>
-                    </div>
-                    
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>5 Produtos Digitais</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>25.000 visitas/mês</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Todos os Templates</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Suporte Prioritário</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Checkout Integrado</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Sequência de E-mails</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary btn-pricing">
-                        <i class="fas fa-bolt"></i> Escolher Plano Profissional
-                    </button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 class="pricing-title">Enterprise</h3>
-                        <div class="pricing-price">
-                            <span class="currency">R$</span>
-                            <span class="amount monthly">397</span>
-                            <span class="amount annually">317</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <p class="pricing-description">Para grandes produtores e agências</p>
-                    </div>
-                    
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Produtos Ilimitados</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Visitas Ilimitadas</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Todos os Templates</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Suporte 24/7</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Checkout Avançado</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span>Automação Completa</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-outline btn-pricing">
-                        Escolher Plano Enterprise
-                    </button>
-                </div>
-            </div>
-            
-            <div class="pricing-notice">
-                <i class="fas fa-shield-alt"></i>
-                <span>Todos os planos incluem nossa garantia de 30 dias. Se não gostar, devolvemos seu dinheiro.</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de Depoimentos -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">O que nossos clientes dizem</span>
-                <h2 class="section-title">Depoimentos de quem já usa o DevLinkPro</h2>
-                <p class="section-description">
-                    Mais de 2.500 desenvolvedores e criadores de conteúdo já transformaram 
-                    suas vendas com nossa solução.
-                </p>
-            </div>
-            
-            <div class="testimonials-slider">
-                <div class="testimonials-track" id="testimonialsTrack">
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" class="testimonial-avatar">
-                            <div class="testimonial-info">
-                                <h4 class="testimonial-name">Roberto Silva</h4>
-                                <span class="testimonial-role">Desenvolvedor Front-end</span>
-                            </div>
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        
-                        <p class="testimonial-text">
-                            "O DevLinkPro mudou completamente como eu vendo meus cursos online. 
-                            Minha taxa de conversão aumentou 340% em apenas 2 meses. O suporte 
-                            é excepcional e o template é extremamente profissional."
-                        </p>
-                        
-                        <div class="testimonial-meta">
-                            <span><i class="fas fa-calendar"></i> Usa há 8 meses</span>
-                            <span><i class="fas fa-chart-line"></i> +340% conversão</span>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" class="testimonial-avatar">
-                            <div class="testimonial-info">
-                                <h4 class="testimonial-name">Amanda Costa</h4>
-                                <span class="testimonial-role">Produtora de Conteúdo</span>
-                            </div>
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        
-                        <p class="testimonial-text">
-                            "Como não tenho conhecimentos técnicos, precisava de algo que fosse 
-                            fácil de usar. O DevLinkPro me permitiu criar uma landing page incrível 
-                            em menos de uma hora. Meus alunos adoraram o design profissional."
-                        </p>
-                        
-                        <div class="testimonial-meta">
-                            <span><i class="fas fa-calendar"></i> Usa há 5 meses</span>
-                            <span><i class="fas fa-chart-line"></i> +220% conversão</span>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Cliente" class="testimonial-avatar">
-                            <div class="testimonial-info">
-                                <h4 class="testimonial-name">Carlos Mendes</h4>
-                                <span class="testimonial-role">CEO de Agência Digital</span>
-                            </div>
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        
-                        <p class="testimonial-text">
-                            "Implementamos o DevLinkPro para 12 clientes diferentes e os resultados 
-                            foram consistentemente excelentes. A personalização é simples e os 
-                            templates são muito profissionais. Economizamos horas de desenvolvimento."
-                        </p>
-                        
-                        <div class="testimonial-meta">
-                            <span><i class="fas fa-calendar"></i> Usa há 1 ano</span>
-                            <span><i class="fas fa-chart-line"></i> 12 clientes satisfeitos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente" class="testimonial-avatar">
-                            <div class="testimonial-info">
-                                <h4 class="testimonial-name">Juliana Fernandes</h4>
-                                <span class="testimonial-role">Consultora de Marketing</span>
-                            </div>
-                            <div class="testimonial-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        
-                        <p class="testimonial-text">
-                            "Depois de testar várias soluções no mercado, o DevLinkPro se destacou 
-                            pela qualidade do código, otimização para SEO e facilidade de uso. 
-                            Meus clientes ficam impressionados com a velocidade das páginas."
-                        </p>
-                        
-                        <div class="testimonial-meta">
-                            <span><i class="fas fa-calendar"></i> Usa há 6 meses</span>
-                            <span><i class="fas fa-chart-line"></i> +180% conversão</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slider-controls">
-                    <button class="slider-btn prev" id="testimonialPrev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="slider-btn next" id="testimonialNext">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="testimonials-logos">
-                <div class="logo-item">
-                    <i class="fas fa-building"></i>
-                    <span>TechCorp</span>
-                </div>
-                <div class="logo-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>DigitalAcademy</span>
-                </div>
-                <div class="logo-item">
-                    <i class="fas fa-briefcase"></i>
-                    <span>StartupHub</span>
-                </div>
-                <div class="logo-item">
-                    <i class="fas fa-chart-line"></i>
-                    <span>GrowthAgency</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de FAQ -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Tire suas dúvidas</span>
-                <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-description">
-                    Reunimos as perguntas mais comuns sobre o DevLinkPro.
-                </p>
-            </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Preciso saber programação para usar o DevLinkPro?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Não! O DevLinkPro foi desenvolvido para ser usado por qualquer pessoa, 
-                            independente de conhecimentos técnicos. Temos um editor visual intuitivo 
-                            que permite personalizar todas as seções da página sem escrever uma 
-                            linha de código.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Como funciona a garantia de 30 dias?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Oferecemos uma garantia incondicional de 30 dias. Se dentro desse período 
-                            você não estiver satisfeito com o DevLinkPro por qualquer motivo, basta 
-                            nos enviar um e-mail que devolvemos 100% do seu dinheiro, sem perguntas.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Posso usar o template para múltiplos clientes?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Sim! Com o plano Profissional ou Enterprise, você tem licença para usar 
-                            o DevLinkPro em projetos de clientes. Cada plano tem um limite de produtos 
-                            digitais que podem ser criados.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Quais formas de pagamento são aceitas?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Aceitamos cartão de crédito (todas as bandeiras), PayPal, PIX e boleto 
-                            bancário. Para empresas, também aceitamos transferência bancária.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>O template é otimizado para SEO?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Sim! O DevLinkPro segue todas as melhores práticas de SEO, incluindo 
-                            estrutura semântica HTML5, meta tags otimizáveis, URLs amigáveis, 
-                            velocidade de carregamento otimizada e marcação schema.org para 
-                            rich snippets.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Posso integrar com minha ferramenta de e-mail marketing?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>
-                            Com certeza! O DevLinkPro integra nativamente com as principais 
-                            ferramentas do mercado: Mailchimp, ActiveCampaign, ConvertKit, 
-                            GetResponse e muitas outras. Também oferecemos integração via API 
-                            para soluções customizadas.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="faq-cta">
-                <p>Ainda tem dúvidas? Nosso time de suporte está pronto para ajudar!</p>
-                <button class="btn btn-primary">
-                    <i class="fas fa-comment-alt"></i> Falar com Suporte
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Final CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <div class="final-cta-content">
-                <h2 class="final-cta-title">
-                    Comece a vender mais hoje mesmo
-                </h2>
-                <p class="final-cta-description">
-                    Junte-se a mais de 2.500 desenvolvedores e criadores que já transformaram 
-                    suas vendas com o DevLinkPro. Crie sua landing page profissional em minutos.
-                </p>
-                
-                <div class="final-cta-buttons">
-                    <button class="btn btn-primary btn-lg" id="finalCtaBtn">
-                        <i class="fas fa-shopping-cart"></i> Comprar DevLinkPro Agora
-                    </button>
-                    <button class="btn btn-secondary btn-lg" id="finalDemoBtn">
-                        <i class="fas fa-play-circle"></i> Ver Demonstração Gratuita
-                    </button>
-                </div>
-                
-                <div class="final-cta-guarantee">
-                    <div class="guarantee-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Garantia de 30 dias</span>
-                    </div>
-                    <div class="guarantee-item">
-                        <i class="fas fa-lock"></i>
-                        <span>Pagamento 100% seguro</span>
-                    </div>
-                    <div class="guarantee-item">
-                        <i class="fas fa-headset"></i>
-                        <span>Suporte especializado</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Rodapé -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <a href="#" class="logo footer-logo">
-                        <span class="logo-icon">🚀</span>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <span class="logo-icon">🔗</span>
                         <span class="logo-text">DevLink<span class="logo-highlight">Pro</span></span>
-                    </a>
+                    </div>
                     <p class="footer-description">
-                        A solução definitiva para landing pages de produtos digitais. 
-                        Desenvolvido com as melhores práticas de UX, performance e SEO.
+                        Template premium para páginas de links profissionais. Feito com ❤️ pela DevTemplates.
                     </p>
-                    
                     <div class="footer-social">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-youtube"></i>
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
                         </a>
                     </div>
                 </div>
                 
-                <div class="footer-section">
-                    <h4 class="footer-title">Produto</h4>
+                <div class="footer-col">
+                    <h3 class="footer-title">Links Rápidos</h3>
                     <ul class="footer-links">
-                        <li><a href="#features">Recursos</a></li>
-                        <li><a href="#pricing">Preços</a></li>
-                        <li><a href="#testimonials">Depoimentos</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#">Demonstração</a></li>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#links">Links</a></li>
+                        <li><a href="#projects">Projetos</a></li>
+                        <li><a href="#contact">Contato</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-section">
-                    <h4 class="footer-title">Empresa</h4>
+                <div class="footer-col">
+                    <h3 class="footer-title">Recursos</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Sobre nós</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreiras</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Suporte</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Central de Ajuda</a></li>
                         <li><a href="#">Documentação</a></li>
-                        <li><a href="#">Tutoriais</a></li>
-                        <li><a href="#">Status do Sistema</a></li>
-                        <li><a href="#">Área do Cliente</a></li>
+                        <li><a href="#">Changelog</a></li>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p class="footer-text">Inscreva-se para receber novidades e atualizações.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="input-group">
+                            <input type="email" placeholder="Seu e-mail" required>
+                            <button type="submit" class="btn-newsletter">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    &copy; 2026 DevConvert Pro. Todos os direitos reservados.
+                    &copy; 2026 DevLinkPro. Todos os direitos reservados. Template por <a href="https://devtemplates.com" target="_blank">DevTemplates</a>.
                 </div>
                 
-                <div class="footer-payments">
-                    <i class="fab fa-cc-visa" title="Visa"></i>
-                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
-                    <i class="fab fa-cc-amex" title="American Express"></i>
-                    <i class="fab fa-cc-paypal" title="PayPal"></i>
-                    <i class="fas fa-barcode" title="Boleto"></i>
+                <div class="footer-legal">
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Cookies</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Modal de Compra -->
-    <div class="modal" id="purchaseModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Finalizar Compra</h3>
-                <button class="modal-close" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="plan-selection">
-                    <h4>Selecione seu plano:</h4>
-                    <div class="plan-options">
-                        <div class="plan-option active" data-plan="professional">
-                            <div class="plan-option-header">
-                                <h5>Profissional</h5>
-                                <div class="plan-price">
-                                    <span class="currency">R$</span>
-                                    <span class="amount">197</span>
-                                    <span class="period">/mês</span>
-                                </div>
-                            </div>
-                            <ul class="plan-features">
-                                <li><i class="fas fa-check"></i> 5 Produtos Digitais</li>
-                                <li><i class="fas fa-check"></i> 25.000 visitas/mês</li>
-                                <li><i class="fas fa-check"></i> Todos os Templates</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="plan-option" data-plan="enterprise">
-                            <div class="plan-option-header">
-                                <h5>Enterprise</h5>
-                                <div class="plan-price">
-                                    <span class="currency">R$</span>
-                                    <span class="amount">397</span>
-                                    <span class="period">/mês</span>
-                                </div>
-                            </div>
-                            <ul class="plan-features">
-                                <li><i class="fas fa-check"></i> Produtos Ilimitados</li>
-                                <li><i class="fas fa-check"></i> Visitas Ilimitadas</li>
-                                <li><i class="fas fa-check"></i> Suporte 24/7</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="payment-form">
-                    <h4>Informações de Pagamento</h4>
-                    <form id="paymentForm">
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" placeholder="seu@email.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="cardNumber">Número do Cartão</label>
-                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="expiryDate">Validade</label>
-                                <input type="text" id="expiryDate" placeholder="MM/AA" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" placeholder="123" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="name">Nome no Cartão</label>
-                            <input type="text" id="name" placeholder="Nome Completo" required>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input type="checkbox" id="agreeTerms" required>
-                            <label for="agreeTerms">
-                                Concordo com os <a href="#">Termos de Serviço</a> e 
-                                <a href="#">Política de Privacidade</a>
-                            </label>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-lock"></i> Finalizar Compra Segura
-                        </button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <p class="security-notice">
-                    <i class="fas fa-shield-alt"></i>
-                    Pagamento 100% seguro criptografado com SSL
-                </p>
-            </div>
-        </div>
-    </div>
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    <!-- Toast de Notificação -->
-    <div class="toast" id="successToast">
-        <div class="toast-content">
-            <i class="fas fa-check-circle"></i>
-            <span class="toast-message">Compra realizada com sucesso!</span>
-        </div>
-        <button class="toast-close">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>

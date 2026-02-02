@@ -1,972 +1,1038 @@
 /**
- * DevLinkPro - Template Premium para Produtos Digitais
- * Scripts principais
- * Versão: 1.0.0
- * Autor: DevTemplates
+ * DevLinkPro - Template Premium para Páginas de Links
+ * Script principal com funcionalidades avançadas
+ * Desenvolvido por DevTemplates
  */
 
-// ============================================
-// 1. INICIALIZAÇÃO DO DOCUMENTO
-// ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DevLinkPro - Template Premium carregado');
-    
-    // Inicializar todos os componentes
-    initNavigation();
-    initTestimonialsSlider();
-    initFAQ();
-    initPricingToggle();
-    initModal();
-    initToast();
-    initScrollAnimations();
-    initFormValidation();
-    initVideoPlayer();
-    
-    // Configurar event listeners
-    setupEventListeners();
-    
-    // Inicializar animações
-    startAnimations();
-});
+    // Configurações iniciais
+    const config = {
+        enableAnimations: true,
+        enableSmoothScroll: true,
+        enableThemeToggle: true,
+        enableFiltering: true,
+        enableFormValidation: true,
+        enableAnalytics: false, // Alterar para true se quiser rastreamento
+        contactFormEndpoint: 'https://api.devlinkpro.com/contact', // Endpoint personalizado
+        newsletterEndpoint: 'https://api.devlinkpro.com/newsletter' // Endpoint personalizado
+    };
 
-// ============================================
-// 2. NAVEGAÇÃO RESPONSIVA
-// ============================================
-function initNavigation() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    const body = document.body;
-    
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            
-            // Mudar ícone do botão
-            const icon = menuToggle.querySelector('i');
-            if (icon) {
-                if (navMenu.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            }
-            
-            // Prevenir scroll do body quando menu está aberto
-            if (navMenu.classList.contains('active')) {
-                body.style.overflow = 'hidden';
-            } else {
-                body.style.overflow = '';
-            }
-        });
+    // Estado da aplicação
+    const state = {
+        currentTheme: localStorage.getItem('theme') || 'light',
+        activeFilter: 'all',
+        formSubmitting: false,
+        modalOpen: false,
+        scrollPosition: 0,
+        visitedSections: new Set()
+    };
+
+    // Inicialização
+    init();
+
+    /**
+     * Inicializa todas as funcionalidades
+     */
+    function init() {
+        console.log('🚀 DevLinkPro inicializado com sucesso!');
         
-        // Fechar menu ao clicar em um link
-        const navLinks = navMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
+        // Aplicar tema salvo
+        applyTheme();
+        
+        // Inicializar componentes
+        initNavigation();
+        initThemeToggle();
+        initLinkFiltering();
+        initForms();
+        initBackToTop();
+        initScrollAnimations();
+        initModals();
+        initAnalytics();
+        initPerformanceMonitoring();
+        
+        // Adicionar eventos globais
+        addGlobalEvents();
+    }
+
+    /**
+     * Aplica o tema (claro/escuro) salvo no localStorage
+     */
+    function applyTheme() {
+        if (state.currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            updateThemeToggleIcon(true);
+        } else {
+            document.body.classList.remove('dark-mode');
+            updateThemeToggleIcon(false);
+        }
+        
+        // Salvar no localStorage
+        localStorage.setItem('theme', state.currentTheme);
+        
+        // Disparar evento personalizado
+        document.dispatchEvent(new CustomEvent('themeChange', {
+            detail: { theme: state.currentTheme }
+        }));
+    }
+
+    /**
+     * Atualiza o ícone do botão de alternância de tema
+     */
+    function updateThemeToggleIcon(isDarkMode) {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            const icon = themeToggle.querySelector('i');
+            if (icon) {
+                icon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+                themeToggle.setAttribute('aria-label', 
+                    isDarkMode ? 'Alternar para tema claro' : 'Alternar para tema escuro');
+            }
+        }
+    }
+
+    /**
+     * Inicializa a navegação (menu mobile, scroll spy, etc.)
+     */
+    function initNavigation() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const header = document.querySelector('.header');
+
+        // Menu mobile toggle
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', 
+                    navMenu.classList.contains('active'));
                 
+                // Atualizar ícone
                 const icon = menuToggle.querySelector('i');
                 if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
+                    icon.className = navMenu.classList.contains('active') 
+                        ? 'fas fa-times' 
+                        : 'fas fa-bars';
                 }
-                
-                body.style.overflow = '';
             });
-        });
-    }
-    
-    // Adicionar sombra à navbar ao rolar
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 10) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-}
 
-// ============================================
-// 3. SLIDER DE DEPOIMENTOS
-// ============================================
-function initTestimonialsSlider() {
-    const track = document.getElementById('testimonialsTrack');
-    const prevBtn = document.getElementById('testimonialPrev');
-    const nextBtn = document.getElementById('testimonialNext');
-    const testimonials = document.querySelectorAll('.testimonial-card');
-    
-    if (!track || !prevBtn || !nextBtn) return;
-    
-    let currentSlide = 0;
-    const totalSlides = testimonials.length;
-    let slidesPerView = 1;
-    
-    // Determinar quantos slides mostrar por vez
-    function updateSlidesPerView() {
-        if (window.innerWidth >= 1024) {
-            slidesPerView = 3;
-        } else if (window.innerWidth >= 768) {
-            slidesPerView = 2;
-        } else {
-            slidesPerView = 1;
-        }
-        
-        // Ajustar o tamanho dos slides
-        const slideWidth = 100 / slidesPerView;
-        testimonials.forEach(slide => {
-            slide.style.flex = `0 0 ${slideWidth}%`;
-        });
-        
-        // Ajustar a posição atual se necessário
-        if (currentSlide > totalSlides - slidesPerView) {
-            currentSlide = Math.max(0, totalSlides - slidesPerView);
-            updateSliderPosition();
-        }
-    }
-    
-    function updateSliderPosition() {
-        const slideWidth = 100 / slidesPerView;
-        track.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
-        
-        // Atualizar estado dos botões
-        prevBtn.disabled = currentSlide === 0;
-        nextBtn.disabled = currentSlide >= totalSlides - slidesPerView;
-        
-        // Adicionar/remover classes de desabilitado
-        if (prevBtn.disabled) {
-            prevBtn.classList.add('disabled');
-        } else {
-            prevBtn.classList.remove('disabled');
-        }
-        
-        if (nextBtn.disabled) {
-            nextBtn.classList.add('disabled');
-        } else {
-            nextBtn.classList.remove('disabled');
-        }
-    }
-    
-    prevBtn.addEventListener('click', function() {
-        if (currentSlide > 0) {
-            currentSlide--;
-            updateSliderPosition();
-        }
-    });
-    
-    nextBtn.addEventListener('click', function() {
-        if (currentSlide < totalSlides - slidesPerView) {
-            currentSlide++;
-            updateSliderPosition();
-        }
-    });
-    
-    // Atualizar no redimensionamento da janela
-    window.addEventListener('resize', updateSlidesPerView);
-    
-    // Inicializar
-    updateSlidesPerView();
-    updateSliderPosition();
-    
-    // Auto-slide (opcional)
-    let autoSlideInterval;
-    
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(function() {
-            if (currentSlide < totalSlides - slidesPerView) {
-                currentSlide++;
-            } else {
-                currentSlide = 0;
-            }
-            updateSliderPosition();
-        }, 5000); // Mudar slide a cada 5 segundos
-    }
-    
-    function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-    }
-    
-    // Iniciar auto-slide
-    startAutoSlide();
-    
-    // Pausar auto-slide ao interagir
-    track.addEventListener('mouseenter', stopAutoSlide);
-    track.addEventListener('mouseleave', startAutoSlide);
-    prevBtn.addEventListener('mouseenter', stopAutoSlide);
-    nextBtn.addEventListener('mouseenter', stopAutoSlide);
-}
-
-// ============================================
-// 4. SISTEMA DE FAQ (ACORDEÃO)
-// ============================================
-function initFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
-        question.addEventListener('click', function() {
-            // Fechar outros itens abertos
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    if (otherAnswer) {
-                        otherAnswer.style.maxHeight = null;
+            // Fechar menu ao clicar em um link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    if (menuToggle) {
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) icon.className = 'fas fa-bars';
                     }
+                });
+            });
+        }
+
+        // Header scroll effect
+        if (header) {
+            let lastScrollTop = 0;
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Adicionar/remover classe quando scrollar
+                if (scrollTop > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Esconder/mostrar header baseado na direção do scroll
+                if (scrollTop > lastScrollTop && scrollTop > 200) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        }
+
+        // Scroll spy para navegação
+        if (config.enableSmoothScroll && navLinks.length > 0) {
+            window.addEventListener('scroll', debounce(function() {
+                const scrollPosition = window.scrollY + 100;
+                
+                // Encontrar seção atual
+                let currentSection = '';
+                
+                document.querySelectorAll('section[id]').forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                // Atualizar link ativo
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href');
+                    
+                    if (href === `#${currentSection}` || 
+                        (currentSection === 'home' && href === '#') ||
+                        (currentSection === '' && href === '#')) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 100));
+        }
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                if (href === '#') return;
+                
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    e.preventDefault();
+                    
+                    // Fechar menu mobile se aberto
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        if (menuToggle) {
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                            const icon = menuToggle.querySelector('i');
+                            if (icon) icon.className = 'fas fa-bars';
+                        }
+                    }
+                    
+                    // Scroll suave
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Atualizar URL sem recarregar a página
+                    history.pushState(null, null, href);
                 }
             });
-            
-            // Alternar item atual
-            item.classList.toggle('active');
-            const answer = item.querySelector('.faq-answer');
-            
-            if (item.classList.contains('active')) {
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-            } else {
-                answer.style.maxHeight = null;
-            }
         });
-    });
-    
-    // Abrir primeiro item por padrão
-    if (faqItems.length > 0) {
-        faqItems[0].classList.add('active');
-        const firstAnswer = faqItems[0].querySelector('.faq-answer');
-        if (firstAnswer) {
-            firstAnswer.style.maxHeight = firstAnswer.scrollHeight + 'px';
-        }
     }
-}
 
-// ============================================
-// 5. ALTERNÂNCIA DE PREÇOS (MENSAL/ANUAL)
-// ============================================
-function initPricingToggle() {
-    const toggle = document.getElementById('pricingToggle');
-    
-    if (!toggle) return;
-    
-    // Atualizar preços quando alternar
-    toggle.addEventListener('change', function() {
-        const monthlyPrices = document.querySelectorAll('.monthly');
-        const annualPrices = document.querySelectorAll('.annually');
-        const switcherLabels = document.querySelectorAll('.switcher-label');
+    /**
+     * Inicializa o alternador de tema
+     */
+    function initThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
         
-        // Alternar classes ativas nos labels
-        switcherLabels.forEach(label => {
-            label.classList.toggle('active');
-        });
-        
-        // Animar a mudança
-        monthlyPrices.forEach(price => {
-            price.style.opacity = toggle.checked ? '0' : '1';
-        });
-        
-        annualPrices.forEach(price => {
-            price.style.opacity = toggle.checked ? '1' : '0';
-        });
-    });
-}
-
-// ============================================
-// 6. MODAL DE COMPRA
-// ============================================
-function initModal() {
-    const modal = document.getElementById('purchaseModal');
-    const openModalBtns = document.querySelectorAll('[id*="CtaBtn"], [id*="buyNowBtn"]');
-    const closeModalBtn = document.getElementById('closeModal');
-    const planOptions = document.querySelectorAll('.plan-option');
-    
-    // Abrir modal
-    openModalBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            openModal();
-        });
-    });
-    
-    // Fechar modal
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeModal);
-    }
-    
-    // Fechar modal ao clicar fora
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        // Fechar com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-    }
-    
-    // Seleção de plano no modal
-    planOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            // Remover seleção anterior
-            planOptions.forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            // Selecionar atual
-            this.classList.add('active');
-        });
-    });
-    
-    function openModal() {
-        if (modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Rolar para o topo do modal
-            setTimeout(() => {
-                modal.scrollTop = 0;
-            }, 10);
-        }
-    }
-    
-    function closeModal() {
-        if (modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-}
-
-// ============================================
-// 7. NOTIFICAÇÕES TOAST
-// ============================================
-function initToast() {
-    const toast = document.getElementById('successToast');
-    const closeToastBtn = toast?.querySelector('.toast-close');
-    
-    if (!toast) return;
-    
-    // Fechar toast
-    if (closeToastBtn) {
-        closeToastBtn.addEventListener('click', function() {
-            hideToast();
-        });
-    }
-    
-    // Auto-fechar após 5 segundos
-    let toastTimeout;
-    
-    function showToast(message) {
-        if (toast) {
-            const toastMessage = toast.querySelector('.toast-message');
-            if (toastMessage && message) {
-                toastMessage.textContent = message;
-            }
-            
-            toast.classList.add('show');
-            
-            // Resetar timeout anterior
-            if (toastTimeout) {
-                clearTimeout(toastTimeout);
-            }
-            
-            // Auto-fechar
-            toastTimeout = setTimeout(() => {
-                hideToast();
-            }, 5000);
-        }
-    }
-    
-    function hideToast() {
-        if (toast) {
-            toast.classList.remove('show');
-        }
-    }
-    
-    // Expor função globalmente para uso em outros lugares
-    window.showToast = showToast;
-}
-
-// ============================================
-// 8. ANIMAÇÕES DE SCROLL
-// ============================================
-function initScrollAnimations() {
-    // Observador de interseção para animações
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
-            }
-        });
-    }, observerOptions);
-    
-    // Elementos para animar
-    const animatableElements = document.querySelectorAll('.feature-card, .testimonial-card, .pricing-card, .benefit-stat');
-    
-    animatableElements.forEach(el => {
-        observer.observe(el);
-    });
-    
-    // Animação suave para links âncora
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            if (href === '#') return;
-            
-            e.preventDefault();
-            const targetElement = document.querySelector(href);
-            
-            if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80; // Ajustar para a navbar
+        if (themeToggle && config.enableThemeToggle) {
+            themeToggle.addEventListener('click', function() {
+                // Alternar tema
+                state.currentTheme = state.currentTheme === 'light' ? 'dark' : 'light';
+                applyTheme();
                 
+                // Feedback tátil
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+                
+                // Registrar evento
+                trackEvent('theme_toggle', { theme: state.currentTheme });
+            });
+        }
+    }
+
+    /**
+     * Inicializa a filtragem de links
+     */
+    function initLinkFiltering() {
+        if (!config.enableFiltering) return;
+        
+        const filterButtons = document.querySelectorAll('.btn-filter');
+        const linkCards = document.querySelectorAll('.link-card');
+        
+        if (filterButtons.length === 0 || linkCards.length === 0) return;
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Atualizar botões ativos
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Atualizar estado
+                state.activeFilter = filter;
+                
+                // Filtrar cards
+                linkCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'flex';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Feedback de áudio (opcional)
+                playSound('click');
+                
+                // Registrar evento
+                trackEvent('link_filter', { filter: filter });
+            });
+        });
+    }
+
+    /**
+     * Inicializa os formulários (contato e newsletter)
+     */
+    function initForms() {
+        const contactForm = document.getElementById('contactForm');
+        const newsletterForm = document.getElementById('newsletterForm');
+        
+        // Formulário de contato
+        if (contactForm && config.enableFormValidation) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (state.formSubmitting) return;
+                
+                // Validar formulário
+                if (!validateForm(this)) return;
+                
+                // Mostrar estado de loading
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                submitButton.disabled = true;
+                state.formSubmitting = true;
+                
+                try {
+                    // Coletar dados do formulário
+                    const formData = new FormData(this);
+                    const data = Object.fromEntries(formData);
+                    
+                    // Aqui você faria a requisição para o backend
+                    // Exemplo com fetch:
+                    // const response = await fetch(config.contactFormEndpoint, {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify(data)
+                    // });
+                    
+                    // Simular delay de rede
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Simular sucesso
+                    showModal('Sucesso!', 'Sua mensagem foi enviada com sucesso. Entrarei em contato em breve.');
+                    
+                    // Limpar formulário
+                    this.reset();
+                    
+                    // Registrar evento
+                    trackEvent('contact_form_submit', { 
+                        success: true,
+                        subject: data.subject
+                    });
+                } catch (error) {
+                    console.error('Erro ao enviar formulário:', error);
+                    showModal('Erro', 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.');
+                    
+                    trackEvent('contact_form_submit', { 
+                        success: false,
+                        error: error.message
+                    });
+                } finally {
+                    // Restaurar botão
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                    state.formSubmitting = false;
+                }
+            });
+        }
+        
+        // Formulário de newsletter
+        if (newsletterForm && config.enableFormValidation) {
+            newsletterForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const emailInput = this.querySelector('input[type="email"]');
+                const submitButton = this.querySelector('button[type="submit"]');
+                
+                if (!emailInput.value || !isValidEmail(emailInput.value)) {
+                    showError(emailInput, 'Por favor, insira um e-mail válido.');
+                    return;
+                }
+                
+                // Mostrar loading
+                const originalHTML = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                submitButton.disabled = true;
+                
+                try {
+                    // Simular envio
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Sucesso
+                    showToast('Inscrição realizada com sucesso!', 'success');
+                    emailInput.value = '';
+                    
+                    trackEvent('newsletter_subscribe', { 
+                        success: true,
+                        email: emailInput.value
+                    });
+                } catch (error) {
+                    showToast('Erro ao se inscrever. Tente novamente.', 'error');
+                    
+                    trackEvent('newsletter_subscribe', { 
+                        success: false,
+                        error: error.message
+                    });
+                } finally {
+                    submitButton.innerHTML = originalHTML;
+                    submitButton.disabled = false;
+                }
+            });
+        }
+    }
+
+    /**
+     * Inicializa o botão "Voltar ao topo"
+     */
+    function initBackToTop() {
+        const backToTopButton = document.getElementById('backToTop');
+        
+        if (backToTopButton) {
+            window.addEventListener('scroll', debounce(function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            }, 100));
+            
+            backToTopButton.addEventListener('click', function() {
                 window.scrollTo({
-                    top: offsetTop,
+                    top: 0,
                     behavior: 'smooth'
+                });
+                
+                trackEvent('back_to_top');
+            });
+        }
+    }
+
+    /**
+     * Inicializa animações de scroll
+     */
+    function initScrollAnimations() {
+        if (!config.enableAnimations) return;
+        
+        const animatedElements = document.querySelectorAll(
+            '.fade-in-up, .hero-content, .link-card, .project-card, .skill-progress'
+        );
+        
+        // Observador de interseção para animações
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    
+                    // Animar elementos com classe fade-in-up
+                    if (element.classList.contains('fade-in-up')) {
+                        element.style.animationPlayState = 'running';
+                    }
+                    
+                    // Animar barras de habilidades
+                    if (element.classList.contains('skill-progress')) {
+                        const width = element.style.width;
+                        element.style.width = '0';
+                        setTimeout(() => {
+                            element.style.width = width;
+                        }, 100);
+                    }
+                    
+                    // Registrar seção visitada
+                    const section = element.closest('section[id]');
+                    if (section && !state.visitedSections.has(section.id)) {
+                        state.visitedSections.add(section.id);
+                        trackEvent('section_view', { section: section.id });
+                    }
+                    
+                    observer.unobserve(element);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    /**
+     * Inicializa modais
+     */
+    function initModals() {
+        // Criar modal container se não existir
+        if (!document.querySelector('.modal')) {
+            const modalHTML = `
+                <div class="modal" id="globalModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title"></h3>
+                            <button class="modal-close" aria-label="Fechar modal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body"></div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        const modal = document.getElementById('globalModal');
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalBody = modal.querySelector('.modal-body');
+        const modalClose = modal.querySelector('.modal-close');
+        
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && state.modalOpen) {
+                closeModal();
+            }
+        });
+        
+        // Fechar modal ao clicar fora
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Fechar com botão
+        if (modalClose) {
+            modalClose.addEventListener('click', closeModal);
+        }
+    }
+
+    /**
+     * Inicializa analytics (se habilitado)
+     */
+    function initAnalytics() {
+        if (!config.enableAnalytics) return;
+        
+        // Rastrear visualização de página
+        trackEvent('page_view', {
+            page_title: document.title,
+            page_url: window.location.href,
+            referrer: document.referrer
+        });
+        
+        // Rastrear cliques em links externos
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            if (!link.href.includes(window.location.hostname)) {
+                link.addEventListener('click', function() {
+                    trackEvent('external_link_click', {
+                        url: this.href,
+                        text: this.textContent
+                    });
                 });
             }
         });
-    });
-}
+    }
 
-// ============================================
-// 9. VALIDAÇÃO DE FORMULÁRIO
-// ============================================
-function initFormValidation() {
-    const paymentForm = document.getElementById('paymentForm');
-    
-    if (paymentForm) {
-        paymentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    /**
+     * Inicializa monitoramento de performance
+     */
+    function initPerformanceMonitoring() {
+        // Medir tempo de carregamento
+        window.addEventListener('load', function() {
+            const loadTime = window.performance.timing.domContentLoadedEventEnd - 
+                           window.performance.timing.navigationStart;
             
-            if (validateForm(this)) {
-                // Simular processamento de pagamento
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-                
-                // Simular delay de processamento
-                setTimeout(() => {
-                    // Fechar modal
-                    const modal = document.getElementById('purchaseModal');
-                    if (modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                    
-                    // Mostrar toast de sucesso
-                    if (window.showToast) {
-                        window.showToast('Compra realizada com sucesso! Em breve você receberá um e-mail de confirmação.');
-                    }
-                    
-                    // Resetar formulário
-                    paymentForm.reset();
-                    
-                    // Restaurar botão
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    
-                    // Rolar para o topo
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }, 2000);
-            }
-        });
-        
-        // Validação em tempo real
-        const inputs = paymentForm.querySelectorAll('input[required]');
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                validateField(this);
-            });
+            console.log(`⏱️  Página carregada em ${loadTime}ms`);
             
-            input.addEventListener('input', function() {
-                clearFieldError(this);
+            trackEvent('performance', {
+                load_time: loadTime,
+                connection_type: navigator.connection ? navigator.connection.effectiveType : 'unknown'
             });
         });
     }
+
+    /**
+     * Adiciona eventos globais
+     */
+    function addGlobalEvents() {
+        // Prevenir comportamentos indesejados
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+        
+        // Feedback tátil para botões
+        document.addEventListener('mousedown', function(e) {
+            if (e.target.matches('.btn, .link-card, .social-link')) {
+                e.target.style.transform = 'scale(0.98)';
+            }
+        });
+        
+        document.addEventListener('mouseup', function(e) {
+            if (e.target.matches('.btn, .link-card, .social-link')) {
+                e.target.style.transform = 'scale(1)';
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Navegação por tabs em cards de links
+            if (e.key === 'Tab' && document.activeElement.classList.contains('link-card')) {
+                const cards = Array.from(document.querySelectorAll('.link-card'));
+                const currentIndex = cards.indexOf(document.activeElement);
+                
+                if (e.shiftKey && currentIndex > 0) {
+                    e.preventDefault();
+                    cards[currentIndex - 1].focus();
+                } else if (!e.shiftKey && currentIndex < cards.length - 1) {
+                    e.preventDefault();
+                    cards[currentIndex + 1].focus();
+                }
+            }
+        });
+    }
+
+    /**
+     * Funções auxiliares
+     */
     
+    // Validar formulário
     function validateForm(form) {
         let isValid = true;
-        const requiredFields = form.querySelectorAll('input[required]');
+        const inputs = form.querySelectorAll('input[required], textarea[required]');
         
-        requiredFields.forEach(field => {
-            if (!validateField(field)) {
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                showError(input, 'Este campo é obrigatório.');
                 isValid = false;
+            } else {
+                clearError(input);
+                
+                // Validação específica para email
+                if (input.type === 'email' && !isValidEmail(input.value)) {
+                    showError(input, 'Por favor, insira um e-mail válido.');
+                    isValid = false;
+                }
             }
         });
         
-        // Validação específica para número do cartão
-        const cardNumber = form.querySelector('#cardNumber');
-        if (cardNumber && cardNumber.value.replace(/\s/g, '').length < 13) {
-            showFieldError(cardNumber, 'Número de cartão inválido');
-            isValid = false;
-        }
-        
-        // Validação específica para CVV
-        const cvv = form.querySelector('#cvv');
-        if (cvv && (cvv.value.length < 3 || cvv.value.length > 4)) {
-            showFieldError(cvv, 'CVV inválido');
-            isValid = false;
-        }
-        
         return isValid;
     }
     
-    function validateField(field) {
-        let isValid = true;
-        let errorMessage = '';
+    // Mostrar erro no campo
+    function showError(input, message) {
+        clearError(input);
         
-        if (!field.value.trim()) {
-            errorMessage = 'Este campo é obrigatório';
-            isValid = false;
-        } else if (field.type === 'email' && !isValidEmail(field.value)) {
-            errorMessage = 'E-mail inválido';
-            isValid = false;
-        } else if (field.id === 'expiryDate' && !isValidExpiryDate(field.value)) {
-            errorMessage = 'Data de validade inválida';
-            isValid = false;
-        }
-        
-        if (!isValid) {
-            showFieldError(field, errorMessage);
-        } else {
-            clearFieldError(field);
-        }
-        
-        return isValid;
-    }
-    
-    function showFieldError(field, message) {
-        clearFieldError(field);
-        
-        field.classList.add('error');
+        input.classList.add('error');
+        input.setAttribute('aria-invalid', 'true');
         
         const errorElement = document.createElement('div');
-        errorElement.className = 'field-error';
+        errorElement.className = 'error-message';
         errorElement.textContent = message;
-        errorElement.style.color = '#EF4444';
-        errorElement.style.fontSize = '0.875rem';
-        errorElement.style.marginTop = '0.25rem';
+        errorElement.style.cssText = `
+            color: #EF4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        `;
         
-        field.parentNode.appendChild(errorElement);
+        input.parentNode.appendChild(errorElement);
+        
+        // Focar no campo com erro
+        input.focus();
     }
     
-    function clearFieldError(field) {
-        field.classList.remove('error');
+    // Limpar erro do campo
+    function clearError(input) {
+        input.classList.remove('error');
+        input.removeAttribute('aria-invalid');
         
-        const existingError = field.parentNode.querySelector('.field-error');
+        const existingError = input.parentNode.querySelector('.error-message');
         if (existingError) {
             existingError.remove();
         }
     }
     
+    // Validar email
     function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
     }
     
-    function isValidExpiryDate(date) {
-        const dateRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
-        if (!dateRegex.test(date)) return false;
-        
-        const [month, year] = date.split('/');
-        const now = new Date();
-        const currentYear = now.getFullYear() % 100;
-        const currentMonth = now.getMonth() + 1;
-        
-        if (parseInt(year) < currentYear) return false;
-        if (parseInt(year) === currentYear && parseInt(month) < currentMonth) return false;
-        
-        return true;
-    }
-}
-
-// ============================================
-// 10. PLAYER DE VÍDEO
-// ============================================
-function initVideoPlayer() {
-    const videoPlaceholders = document.querySelectorAll('.video-thumbnail');
-    
-    videoPlaceholders.forEach(placeholder => {
-        placeholder.addEventListener('click', function() {
-            // Substituir placeholder por iframe do YouTube/Vimeo
-            const videoContainer = this.closest('.video-placeholder');
-            
-            if (videoContainer) {
-                // Criar iframe
-                const iframe = document.createElement('iframe');
-                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1'; // URL de exemplo
-                iframe.title = 'Demo do DevLinkPro';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = 'none';
-                
-                // Substituir conteúdo
-                videoContainer.innerHTML = '';
-                videoContainer.style.height = '400px';
-                videoContainer.appendChild(iframe);
-            }
-        });
-    });
-}
-
-// ============================================
-// 11. CONFIGURAÇÃO DE EVENT LISTENERS
-// ============================================
-function setupEventListeners() {
-    // Botão de demonstração
-    const demoBtns = document.querySelectorAll('[id*="demoBtn"], [id*="DemoBtn"]');
-    demoBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Rolar para a seção de demonstração
-            const demoSection = document.querySelector('.demo-section');
-            if (demoSection) {
-                const offsetTop = demoSection.offsetTop - 80;
-                
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-                
-                // Simular clique no player de vídeo após um delay
-                setTimeout(() => {
-                    const videoThumbnail = document.querySelector('.video-thumbnail');
-                    if (videoThumbnail) {
-                        videoThumbnail.click();
-                    }
-                }, 800);
-            }
-        });
-    });
-    
-    // Botão de assistir demonstração
-    const watchDemoBtn = document.getElementById('watchDemoBtn');
-    if (watchDemoBtn) {
-        watchDemoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const videoThumbnail = document.querySelector('.video-thumbnail');
-            if (videoThumbnail) {
-                videoThumbnail.click();
-            }
-        });
+    // Debounce para eventos de scroll/resize
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
     
-    // Botões de plano de preços
-    const pricingBtns = document.querySelectorAll('.btn-pricing');
-    pricingBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Abrir modal de compra
-            const modal = document.getElementById('purchaseModal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Selecionar plano correspondente
-                const pricingCard = this.closest('.pricing-card');
-                if (pricingCard) {
-                    const planType = pricingCard.classList.contains('featured') ? 'professional' : 
-                                   pricingCard.querySelector('.pricing-title').textContent.toLowerCase();
-                    
-                    const planOptions = document.querySelectorAll('.plan-option');
-                    planOptions.forEach(option => {
-                        option.classList.remove('active');
-                        if (option.dataset.plan === planType) {
-                            option.classList.add('active');
-                        }
-                    });
+    // Throttle para eventos frequentes
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+    
+    // Mostrar modal
+    function showModal(title, content) {
+        const modal = document.getElementById('globalModal');
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalBody = modal.querySelector('.modal-body');
+        
+        modalTitle.textContent = title;
+        modalBody.innerHTML = `<p>${content}</p>`;
+        
+        modal.classList.add('active');
+        state.modalOpen = true;
+        
+        // Focar no botão de fechar para acessibilidade
+        setTimeout(() => {
+            modal.querySelector('.modal-close').focus();
+        }, 100);
+        
+        // Prevenir scroll no body
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Fechar modal
+    function closeModal() {
+        const modal = document.getElementById('globalModal');
+        modal.classList.remove('active');
+        state.modalOpen = false;
+        document.body.style.overflow = '';
+    }
+    
+    // Mostrar toast (notificação)
+    function showToast(message, type = 'info') {
+        // Remover toast existente
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) existingToast.remove();
+        
+        // Criar toast
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6'};
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            animation: toastIn 0.3s ease;
+        `;
+        
+        // Adicionar ao body
+        document.body.appendChild(toast);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+            toast.style.animation = 'toastOut 0.3s ease forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+        
+        // Adicionar keyframes para animação
+        if (!document.getElementById('toast-styles')) {
+            const style = document.createElement('style');
+            style.id = 'toast-styles';
+            style.textContent = `
+                @keyframes toastIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
                 }
-            }
-        });
-    });
-}
-
-// ============================================
-// 12. ANIMAÇÕES INICIAIS
-// ============================================
-function startAnimations() {
-    // Animar elementos da hero section
-    const heroElements = document.querySelectorAll('.hero-text > *');
-    heroElements.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, index * 100 + 300);
-    });
-    
-    // Animar showcase
-    const showcase = document.querySelector('.showcase-container');
-    if (showcase) {
-        showcase.style.opacity = '0';
-        showcase.style.transform = 'translateY(40px) scale(0.95)';
-        
-        setTimeout(() => {
-            showcase.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            showcase.style.opacity = '1';
-            showcase.style.transform = 'translateY(0) scale(1)';
-        }, 800);
+                @keyframes toastOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
-}
-
-// ============================================
-// 13. CONTADOR DE ESTATÍSTICAS
-// ============================================
-function initCounters() {
-    const counters = document.querySelectorAll('.stat-number, .stat-value');
     
-    counters.forEach(counter => {
-        const target = parseInt(counter.textContent);
-        const suffix = counter.textContent.replace(/[0-9]/g, '');
-        const duration = 2000; // 2 segundos
-        const step = target / (duration / 16); // 60fps
+    // Reproduzir som (opcional)
+    function playSound(type) {
+        if (typeof Audio === 'undefined') return;
         
-        let current = 0;
+        // Criar contexto de áudio
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
-        const updateCounter = () => {
-            current += step;
-            
-            if (current < target) {
-                counter.textContent = Math.floor(current) + suffix;
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target + suffix;
+        // Gerar som baseado no tipo
+        let frequency = 440;
+        let duration = 0.1;
+        
+        switch(type) {
+            case 'click':
+                frequency = 523.25; // C5
+                break;
+            case 'success':
+                frequency = 659.25; // E5
+                break;
+            case 'error':
+                frequency = 392.00; // G4
+                break;
+        }
+        
+        // Criar oscilador
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration);
+    }
+    
+    // Rastrear eventos (para analytics)
+    function trackEvent(eventName, properties = {}) {
+        if (!config.enableAnalytics) return;
+        
+        const eventData = {
+            event: eventName,
+            properties: {
+                ...properties,
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                userAgent: navigator.userAgent,
+                theme: state.currentTheme
             }
         };
         
-        // Iniciar quando o elemento estiver visível
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    updateCounter();
-                    observer.unobserve(entry.target);
+        // Aqui você enviaria para seu serviço de analytics
+        // Exemplo: Google Analytics, Mixpanel, etc.
+        console.log('📊 Evento:', eventData);
+        
+        // Exemplo com Google Analytics (se configurado)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', eventName, properties);
+        }
+    }
+    
+    // Detectar preferência de redução de movimento
+    function prefersReducedMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    
+    // Carregar lazy loading para imagens
+    function initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img.lazy').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+    
+    // Copiar texto para área de transferência
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('Copiado para a área de transferência!', 'success');
+        }).catch(err => {
+            console.error('Erro ao copiar:', err);
+            showToast('Erro ao copiar.', 'error');
+        });
+    }
+    
+    // Gerar QR Code para a página atual
+    function generateQRCode(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        const url = window.location.href;
+        const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`;
+        
+        element.innerHTML = `<img src="${qrCodeURL}" alt="QR Code da página" style="border-radius: 8px;">`;
+    }
+    
+    // Detectar dispositivo e orientação
+    function getDeviceInfo() {
+        return {
+            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+            isTablet: /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent),
+            isDesktop: !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+            orientation: window.matchMedia("(orientation: portrait)").matches ? "portrait" : "landscape"
+        };
+    }
+    
+    // Exibir hora atual com formatação
+    function displayCurrentTime(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            element.textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+    }
+    
+    // Sistema de notificações (requer permissão)
+    function requestNotificationPermission() {
+        if ("Notification" in window && Notification.permission === "default") {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    console.log("Permissão para notificações concedida");
                 }
             });
+        }
+    }
+    
+    // Enviar notificação
+    function sendNotification(title, options = {}) {
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification(title, options);
+        }
+    }
+    
+    // Verificar conexão com a internet
+    function checkConnection() {
+        if (!navigator.onLine) {
+            showToast('Você está offline. Algumas funcionalidades podem não estar disponíveis.', 'error');
+        }
+        
+        window.addEventListener('online', () => {
+            showToast('Conectado à internet.', 'success');
         });
         
-        observer.observe(counter);
-    });
-}
-
-// Inicializar contadores após um delay
-setTimeout(initCounters, 1000);
-
-// ============================================
-// 14. DETECÇÃO DE DISPOSITIVOS E RECURSOS
-// ============================================
-function checkDeviceFeatures() {
-    // Verificar se é um dispositivo touch
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
-    if (isTouchDevice) {
-        document.body.classList.add('touch-device');
-    } else {
-        document.body.classList.add('no-touch-device');
-    }
-    
-    // Verificar preferência por reduzir movimento
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (prefersReducedMotion) {
-        document.body.classList.add('reduce-motion');
-    }
-}
-
-// Executar verificação
-checkDeviceFeatures();
-
-// ============================================
-// 15. TRACKING DE EVENTOS (ANÁLISE)
-// ============================================
-function setupAnalytics() {
-    // Track clicks em CTAs
-    const ctaButtons = document.querySelectorAll('[class*="cta"], .btn-primary');
-    
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const buttonText = this.textContent.trim();
-            const buttonId = this.id || 'no-id';
-            
-            console.log(`CTA clicked: ${buttonText} (ID: ${buttonId})`);
-            
-            // Aqui você integraria com Google Analytics, Facebook Pixel, etc.
-            // Exemplo: gtag('event', 'click', { 'event_category': 'CTA', 'event_label': buttonText });
+        window.addEventListener('offline', () => {
+            showToast('Conexão perdida.', 'error');
         });
-    });
-    
-    // Track scroll para seções
-    const sections = document.querySelectorAll('section[id]');
-    
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                console.log(`Section viewed: ${sectionId}`);
-                
-                // Aqui você integraria com analytics
-                // Exemplo: gtag('event', 'view', { 'event_category': 'Section', 'event_label': sectionId });
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-}
-
-// Inicializar analytics
-setTimeout(setupAnalytics, 2000);
-
-// ============================================
-// 16. OTIMIZAÇÃO DE PERFORMANCE
-// ============================================
-function optimizePerformance() {
-    // Lazy loading para imagens
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-    
-    // Defer carregamento de fontes não críticas
-    const loadFonts = () => {
-        // Carregar fontes adicionais se necessário
-    };
-    
-    // Carregar fontes após a página inicial
-    if (document.readyState === 'complete') {
-        loadFonts();
-    } else {
-        window.addEventListener('load', loadFonts);
     }
-}
-
-// Executar otimizações
-optimizePerformance();
-
-// ============================================
-// 17. TRATAMENTO DE ERROS
-// ============================================
-window.addEventListener('error', function(e) {
-    console.error('Erro capturado:', e.error);
     
-    // Aqui você poderia enviar o erro para um serviço de logging
-    // Exemplo: Sentry.captureException(e.error);
-    
-    return false;
-});
-
-// ============================================
-// 18. EXPORTAR FUNÇÕES PARA USO GLOBAL
-// ============================================
-// Expor funções úteis para uso externo se necessário
-window.DevLinkPro = {
-    openPurchaseModal: function() {
-        const modal = document.getElementById('purchaseModal');
-        if (modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    },
-    
-    closePurchaseModal: function() {
-        const modal = document.getElementById('purchaseModal');
-        if (modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    },
-    
-    showNotification: function(message) {
-        if (window.showToast) {
-            window.showToast(message);
-        }
-    }
-};
-
-// ============================================
-// 19. POLYFILLS PARA NAVEGADORES ANTIGOS
-// ============================================
-// Polyfill para forEach em NodeLists (IE)
-if (window.NodeList && !NodeList.prototype.forEach) {
-    NodeList.prototype.forEach = function(callback, thisArg) {
-        thisArg = thisArg || window;
-        for (var i = 0; i < this.length; i++) {
-            callback.call(thisArg, this[i], i, this);
-        }
-    };
-}
-
-// Polyfill para closest (IE)
-if (!Element.prototype.closest) {
-    Element.prototype.closest = function(s) {
-        var el = this;
-        do {
-            if (el.matches(s)) return el;
-            el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-    };
-}
-
-// Polyfill para matches (IE)
-if (!Element.prototype.matches) {
-    Element.prototype.matches = 
-        Element.prototype.matchesSelector || 
-        Element.prototype.mozMatchesSelector ||
-        Element.prototype.msMatchesSelector || 
-        Element.prototype.oMatchesSelector || 
-        Element.prototype.webkitMatchesSelector ||
-        function(s) {
-            var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-                i = matches.length;
-            while (--i >= 0 && matches.item(i) !== this) {}
-            return i > -1;
+    // Exportar dados da página (para fins de backup)
+    function exportPageData() {
+        const data = {
+            title: document.title,
+            url: window.location.href,
+            timestamp: new Date().toISOString(),
+            theme: state.currentTheme,
+            visitedSections: Array.from(state.visitedSections)
         };
-}
-
-// ============================================
-// 20. FINALIZAÇÃO
-// ============================================
-console.log('DevLinkPro - Scripts inicializados com sucesso');
-
-// Sinalizar que a inicialização está completa
-document.dispatchEvent(new Event('DevLinkProReady'));
+        
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        
+        const exportFileDefaultName = `devlinkpro-backup-${new Date().toISOString().slice(0,10)}.json`;
+        
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    }
+    
+    // Funções expostas globalmente (opcional)
+    window.DevLinkPro = {
+        changeTheme: function(theme) {
+            if (theme === 'light' || theme === 'dark') {
+                state.currentTheme = theme;
+                applyTheme();
+            }
+        },
+        getCurrentTheme: function() {
+            return state.currentTheme;
+        },
+        filterLinks: function(filter) {
+            state.activeFilter = filter;
+            const button = document.querySelector(`.btn-filter[data-filter="${filter}"]`);
+            if (button) button.click();
+        },
+        showContactForm: function() {
+            document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+        },
+        exportData: exportPageData,
+        copyToClipboard: copyToClipboard,
+        generateQRCode: generateQRCode,
+        getDeviceInfo: getDeviceInfo
+    };
+    
+    // Inicializar funcionalidades adicionais
+    initLazyLoading();
+    checkConnection();
+    requestNotificationPermission();
+    
+    // Exibir aviso de cookies (exemplo)
+    function checkCookies() {
+        if (!localStorage.getItem('cookies_accepted')) {
+            setTimeout(() => {
+                showModal('Cookies e Privacidade', 
+                    'Utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de privacidade.');
+                
+                const modalBody = document.querySelector('.modal-body');
+                const acceptButton = document.createElement('button');
+                acceptButton.textContent = 'Aceitar';
+                acceptButton.className = 'btn btn-primary';
+                acceptButton.style.marginTop = '1rem';
+                acceptButton.addEventListener('click', () => {
+                    localStorage.setItem('cookies_accepted', 'true');
+                    closeModal();
+                });
+                
+                modalBody.appendChild(acceptButton);
+            }, 2000);
+        }
+    }
+    
+    checkCookies();
+    
+    console.log('✅ DevLinkPro totalmente carregado e funcionando!');
+});
